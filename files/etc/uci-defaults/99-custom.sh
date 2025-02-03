@@ -13,14 +13,14 @@ uci set firewall.@zone[1].input='ACCEPT'
 
 
 # 计算网卡数量
-# count=0
-# for iface in /sys/class/net/*; do
-#   iface_name=$(basename "$iface")
+count=0
+for iface in /sys/class/net/*; do
+  iface_name=$(basename "$iface")
   # 检查是否为物理网卡（排除回环设备和无线设备）
-#   if [ -e "$iface/device" ] && echo "$iface_name" | grep -Eq '^eth|^en'; then
-#     count=$((count + 1))
-#   fi
-# done
+  if [ -e "$iface/device" ] && echo "$iface_name" | grep -Eq '^eth|^en'; then
+    count=$((count + 1))
+  fi
+done
 
 # 检查配置文件pppoe-settings是否存在 该文件由build.sh动态生成
 SETTINGS_FILE="/etc/config/pppoe-settings"
